@@ -15,14 +15,48 @@ class UsersController {
     try {
       const { userEmail, userPassword } = req.body;
 
-      const userRow = await this.users.get(userEmail);
+      if (!userEmail || !userPassword) {
+        return this.userNotFound(res);
+      }
 
-      res.status(this.success).json({ success: true, data: userRow });
+      const userData = await this.users.get(userEmail);
+
+      if (!userData) {
+        return this.userNotFound(res);
+      }
+
+      if (userPassword !== userData.password) {
+        return this.userNotFound(res);
+      }
+
+      req.session.isLogged = true;
+
+      res.status(this.success).json({ success: true, data: userData });
     } catch (error) {
       res
         .status(this.notFound)
         .json({ success: false, msg: "User not found." });
     }
+  }
+
+  checkLogged(req, res) {
+    let isLogged = false;
+
+    if (req.session.isLogged) {
+      isLogged = true;
+    }
+
+    res
+      .status(this.success)
+      .json({ success: true, data: { isLogged: isLogged } });
+  }
+
+  userNotFound(res) {
+    const userNotFound = "Usuário não encontrado.";
+
+    return res
+      .status(this.notFound)
+      .json({ success: false, msg: userNotFound });
   }
 }
 
