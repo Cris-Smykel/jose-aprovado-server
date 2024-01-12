@@ -9,8 +9,8 @@ class Users {
         name: "name",
         email: "email",
         password: "password",
-        created_at: "created_at",
-        updated_at: "updated_at",
+        createdAt: "created_at",
+        updatedAt: "updated_at",
       },
     };
 

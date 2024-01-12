@@ -23,6 +23,9 @@ app.use(express.json());
 const userRouter = require("./routes/api/v1/user");
 app.use("/api/v1/user", userRouter);
 
+const subjectsRouter = require("./routes/api/v1/subjects");
+app.use("/api/v1/subjects", subjectsRouter);
+
 app.listen(5000, () => {
   return;
 });
