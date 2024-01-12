@@ -30,6 +30,10 @@ class UsersController {
       }
 
       req.session.isLogged = true;
+      req.session.userData = {
+        email: userEmail,
+        id: userData.id,
+      };
 
       res.status(this.success).json({ success: true, data: userData });
     } catch (error) {

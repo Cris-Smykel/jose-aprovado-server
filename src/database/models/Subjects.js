@@ -31,6 +31,27 @@ class Subjects {
       throw error;
     }
   }
+
+  async create(subjectData) {
+    try {
+      const query = "INSERT INTO ??(??, ??, ??) VALUES(?, ?, ?)";
+
+      const queryDone = await this.database.query(query, [
+        this.table.name,
+        this.table.columns.name,
+        this.table.columns.timeSpentOn,
+        this.table.columns.userId,
+        subjectData.subjectName,
+        subjectData.timeSpentOn,
+        subjectData.userId,
+      ]);
+
+      return "Matéria criada com sucesso.";
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
 
 module.exports = Subjects;

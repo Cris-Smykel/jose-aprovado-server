@@ -19,11 +19,12 @@ class Users {
 
   async get(email) {
     try {
-      const query = "SELECT ??, ?? FROM ?? WHERE ?? LIKE ? LIMIT 1";
+      const query = "SELECT ??, ??, ?? FROM ?? WHERE ?? LIKE ? LIMIT 1";
 
       const [rows] = await this.database.query(query, [
         this.table.columns.email,
         this.table.columns.password,
+        this.table.columns.id,
         this.table.name,
         this.table.columns.email,
         email,
