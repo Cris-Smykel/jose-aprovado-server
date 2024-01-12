@@ -13,7 +13,9 @@ class SubjectsController {
 
   async getAll(req, res) {
     try {
-      const subjectsData = await this.subjects.all();
+      const userId = req.session.userData.id;
+
+      const subjectsData = await this.subjects.all(userId);
 
       res.status(this.success).json({ success: true, data: subjectsData });
     } catch (error) {

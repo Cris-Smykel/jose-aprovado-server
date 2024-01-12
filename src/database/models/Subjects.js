@@ -1,4 +1,5 @@
 const pool = require("../config");
+const { transformKeys } = require("../../util/util");
 
 class Subjects {
   constructor() {
@@ -17,15 +18,18 @@ class Subjects {
     };
   }
 
-  async all() {
+  async all(userId) {
     try {
-      const query = "SELECT * FROM ??";
+      const query = "SELECT * FROM ?? WHERE ?? LIKE ? ORDER BY ?? DESC";
 
       const [rows, fields] = await this.database.query(query, [
         this.table.name,
+        this.table.columns.userId,
+        userId,
+        this.table.columns.updatedAt,
       ]);
 
-      return rows;
+      return transformKeys(rows);
     } catch (error) {
       console.error(error);
       throw error;
